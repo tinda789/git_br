@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.app.userservice.entity.tenant.Tenant;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -71,11 +70,6 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
     
-    // Thêm liên kết đến Tenant
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
-    private Tenant tenant;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
