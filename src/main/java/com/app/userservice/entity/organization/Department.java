@@ -47,8 +47,13 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Position> positions = new HashSet<>();
     
-    @ManyToMany(mappedBy = "departments")
+    // Nhân viên có phòng ban này là phòng ban chính
+    @OneToMany(mappedBy = "department")
     private Set<Employee> employees = new HashSet<>();
+    
+    // Nhân viên có phòng ban này là phòng ban phụ
+    @ManyToMany(mappedBy = "secondaryDepartments")
+    private Set<Employee> secondaryEmployees = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

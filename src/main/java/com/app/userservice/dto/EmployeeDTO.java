@@ -17,14 +17,20 @@ import java.util.Set;
 public class EmployeeDTO {
     private Long id;
     
-    @Size(max = 20, message = "Employee ID cannot exceed 20 characters")
+    @Size(max = 20, message = "Mã nhân viên không được vượt quá 20 ký tự")
     private String employeeId;
     
-    @NotNull(message = "User ID is required")
+    @NotNull(message = "ID người dùng là bắt buộc")
     private Long userId;
     
-    @NotNull(message = "Company ID is required")
+    @NotNull(message = "ID công ty là bắt buộc")
     private Long companyId;
+    
+    @NotNull(message = "ID phòng ban chính là bắt buộc")
+    private Long departmentId;
+    
+    @NotNull(message = "ID vị trí là bắt buộc")
+    private Long positionId;
     
     private LocalDate hireDate;
     
@@ -34,19 +40,17 @@ public class EmployeeDTO {
     
     private Long managerId;
     
-    @Size(max = 100, message = "Job title cannot exceed 100 characters")
+    @Size(max = 100, message = "Chức danh không được vượt quá 100 ký tự")
     private String jobTitle;
     
-    @Email(message = "Work email should be valid")
-    @Size(max = 100, message = "Work email cannot exceed 100 characters")
+    @Email(message = "Email công việc phải đúng định dạng")
+    @Size(max = 100, message = "Email công việc không được vượt quá 100 ký tự")
     private String workEmail;
     
-    @Size(max = 20, message = "Work phone cannot exceed 20 characters")
+    @Size(max = 20, message = "Số điện thoại công việc không được vượt quá 20 ký tự")
     private String workPhone;
     
-    private Set<Long> departmentIds = new HashSet<>();
+    private Set<Long> secondaryDepartmentIds = new HashSet<>();
     
     private Set<Long> teamIds = new HashSet<>();
-    
-    private Set<Long> positionIds = new HashSet<>();
 }

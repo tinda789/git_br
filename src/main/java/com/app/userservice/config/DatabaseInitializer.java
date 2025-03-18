@@ -75,7 +75,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         createPermissionIfNotFound("PROJECT_UPDATE", "Update projects", "project", "update");
         createPermissionIfNotFound("PROJECT_DELETE", "Delete projects", "project", "delete");
         
- // Workspace permissions
+        // Workspace permissions
         createPermissionIfNotFound("WORKSPACE_READ", "Read workspace information", "workspace", "read");
         createPermissionIfNotFound("WORKSPACE_CREATE", "Create workspaces", "workspace", "create");
         createPermissionIfNotFound("WORKSPACE_UPDATE", "Update workspaces", "workspace", "update");
@@ -95,7 +95,35 @@ public class DatabaseInitializer implements CommandLineRunner {
         createPermissionIfNotFound("DOCUMENT_UPDATE", "Update documents", "document", "update");
         createPermissionIfNotFound("DOCUMENT_DELETE", "Delete documents", "document", "delete");
         
-      
+        // Company permissions
+        createPermissionIfNotFound("COMPANY_READ", "Xem thông tin công ty", "company", "read");
+        createPermissionIfNotFound("COMPANY_CREATE", "Tạo công ty mới", "company", "create");
+        createPermissionIfNotFound("COMPANY_UPDATE", "Cập nhật thông tin công ty", "company", "update");
+        createPermissionIfNotFound("COMPANY_DELETE", "Xóa công ty", "company", "delete");
+        
+        // Department permissions
+        createPermissionIfNotFound("DEPARTMENT_READ", "Xem thông tin phòng ban", "department", "read");
+        createPermissionIfNotFound("DEPARTMENT_CREATE", "Tạo phòng ban mới", "department", "create");
+        createPermissionIfNotFound("DEPARTMENT_UPDATE", "Cập nhật thông tin phòng ban", "department", "update");
+        createPermissionIfNotFound("DEPARTMENT_DELETE", "Xóa phòng ban", "department", "delete");
+        
+        // Team permissions
+        createPermissionIfNotFound("TEAM_READ", "Xem thông tin nhóm", "team", "read");
+        createPermissionIfNotFound("TEAM_CREATE", "Tạo nhóm mới", "team", "create");
+        createPermissionIfNotFound("TEAM_UPDATE", "Cập nhật thông tin nhóm", "team", "update");
+        createPermissionIfNotFound("TEAM_DELETE", "Xóa nhóm", "team", "delete");
+        
+        // Position permissions
+        createPermissionIfNotFound("POSITION_READ", "Xem thông tin vị trí", "position", "read");
+        createPermissionIfNotFound("POSITION_CREATE", "Tạo vị trí mới", "position", "create");
+        createPermissionIfNotFound("POSITION_UPDATE", "Cập nhật thông tin vị trí", "position", "update");
+        createPermissionIfNotFound("POSITION_DELETE", "Xóa vị trí", "position", "delete");
+        
+        // Employee permissions
+        createPermissionIfNotFound("EMPLOYEE_READ", "Xem thông tin nhân viên", "employee", "read");
+        createPermissionIfNotFound("EMPLOYEE_CREATE", "Tạo hồ sơ nhân viên mới", "employee", "create");
+        createPermissionIfNotFound("EMPLOYEE_UPDATE", "Cập nhật thông tin nhân viên", "employee", "update");
+        createPermissionIfNotFound("EMPLOYEE_DELETE", "Vô hiệu hóa nhân viên", "employee", "delete");
     }
 
     private Permission createPermissionIfNotFound(String name, String description, String resourceName, String actionName) {
@@ -118,7 +146,12 @@ public class DatabaseInitializer implements CommandLineRunner {
                 permissionRepository.findByName("USER_READ").orElseThrow(),
                 permissionRepository.findByName("TASK_READ").orElseThrow(),
                 permissionRepository.findByName("PROJECT_READ").orElseThrow(),
-                permissionRepository.findByName("DOCUMENT_READ").orElseThrow()
+                permissionRepository.findByName("DOCUMENT_READ").orElseThrow(),
+                permissionRepository.findByName("COMPANY_READ").orElseThrow(),
+                permissionRepository.findByName("DEPARTMENT_READ").orElseThrow(),
+                permissionRepository.findByName("TEAM_READ").orElseThrow(),
+                permissionRepository.findByName("POSITION_READ").orElseThrow(),
+                permissionRepository.findByName("EMPLOYEE_READ").orElseThrow()
         ));
         createRoleIfNotFound("USER", "Basic authenticated user", userPermissions);
         
@@ -131,7 +164,12 @@ public class DatabaseInitializer implements CommandLineRunner {
                 permissionRepository.findByName("PROJECT_READ").orElseThrow(),
                 permissionRepository.findByName("DOCUMENT_READ").orElseThrow(),
                 permissionRepository.findByName("DOCUMENT_CREATE").orElseThrow(),
-                permissionRepository.findByName("DOCUMENT_UPDATE").orElseThrow()
+                permissionRepository.findByName("DOCUMENT_UPDATE").orElseThrow(),
+                permissionRepository.findByName("COMPANY_READ").orElseThrow(),
+                permissionRepository.findByName("DEPARTMENT_READ").orElseThrow(),
+                permissionRepository.findByName("TEAM_READ").orElseThrow(),
+                permissionRepository.findByName("POSITION_READ").orElseThrow(),
+                permissionRepository.findByName("EMPLOYEE_READ").orElseThrow()
         ));
         createRoleIfNotFound("EMPLOYEE", "Company employee", employeePermissions);
         
@@ -148,7 +186,18 @@ public class DatabaseInitializer implements CommandLineRunner {
                 permissionRepository.findByName("DOCUMENT_READ").orElseThrow(),
                 permissionRepository.findByName("DOCUMENT_CREATE").orElseThrow(),
                 permissionRepository.findByName("DOCUMENT_UPDATE").orElseThrow(),
-                permissionRepository.findByName("DOCUMENT_DELETE").orElseThrow()
+                permissionRepository.findByName("DOCUMENT_DELETE").orElseThrow(),
+                permissionRepository.findByName("COMPANY_READ").orElseThrow(),
+                permissionRepository.findByName("DEPARTMENT_READ").orElseThrow(),
+                permissionRepository.findByName("DEPARTMENT_UPDATE").orElseThrow(),
+                permissionRepository.findByName("TEAM_READ").orElseThrow(),
+                permissionRepository.findByName("TEAM_CREATE").orElseThrow(),
+                permissionRepository.findByName("TEAM_UPDATE").orElseThrow(),
+                permissionRepository.findByName("POSITION_READ").orElseThrow(),
+                permissionRepository.findByName("POSITION_CREATE").orElseThrow(),
+                permissionRepository.findByName("POSITION_UPDATE").orElseThrow(),
+                permissionRepository.findByName("EMPLOYEE_READ").orElseThrow(),
+                permissionRepository.findByName("EMPLOYEE_UPDATE").orElseThrow()
         ));
         createRoleIfNotFound("MANAGER", "Department manager", managerPermissions);
         

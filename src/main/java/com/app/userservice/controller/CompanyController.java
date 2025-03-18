@@ -1,6 +1,8 @@
 package com.app.userservice.controller;
 
 import com.app.userservice.dto.CompanyDTO;
+import com.app.userservice.dto.CompanyDetailDTO;
+import com.app.userservice.dto.CompanyStatsDTO;
 import com.app.userservice.dto.MessageResponse;
 import com.app.userservice.security.service.UserDetailsImpl;
 import com.app.userservice.service.CompanyService;
@@ -42,6 +44,20 @@ public class CompanyController {
         CompanyDTO company = companyService.getCompanyById(id);
         return ResponseEntity.ok(company);
     }
+    
+    @GetMapping("/{id}/detail")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<CompanyDetailDTO> getCompanyDetail(@PathVariable Long id) {
+        CompanyDetailDTO companyDetail = companyService.getCompanyDetail(id);
+        return ResponseEntity.ok(companyDetail);
+    }
+    
+    @GetMapping("/{id}/stats")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<CompanyStatsDTO> getCompanyStats(@PathVariable Long id) {
+        CompanyStatsDTO stats = companyService.getCompanyStats(id);
+        return ResponseEntity.ok(stats);
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('SYSTEM_ADMIN')")
@@ -80,6 +96,18 @@ public class CompanyController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> deleteCompany(@PathVariable Long id) {
         MessageResponse response = companyService.deleteCompany(id);
+        
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+    
+    @PutMapping("/{id}/restore")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<MessageResponse> restoreCompany(@PathVariable Long id) {
+        MessageResponse response = companyService.restoreCompany(id);
         
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);

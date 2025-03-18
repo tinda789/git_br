@@ -35,7 +35,7 @@ public class Position {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
     
-    @ManyToMany(mappedBy = "positions")
+    @OneToMany(mappedBy = "position")
     private Set<Employee> employees = new HashSet<>();
     
     @Column(nullable = false)

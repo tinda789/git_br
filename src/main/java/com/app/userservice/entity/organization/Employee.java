@@ -51,13 +51,19 @@ public class Employee {
     @OneToMany(mappedBy = "manager")
     private Set<Employee> subordinates = new HashSet<>();
 
+    // Phòng ban chính
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
+    
+    // Phòng ban phụ
     @ManyToMany
     @JoinTable(
-        name = "employee_departments",
+        name = "employee_secondary_departments",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns = @JoinColumn(name = "department_id")
     )
-    private Set<Department> departments = new HashSet<>();
+    private Set<Department> secondaryDepartments = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -67,13 +73,10 @@ public class Employee {
     )
     private Set<Team> teams = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "employee_positions",
-        joinColumns = @JoinColumn(name = "employee_id"),
-        inverseJoinColumns = @JoinColumn(name = "position_id")
-    )
-    private Set<Position> positions = new HashSet<>();
+    // Vị trí chính
+    @ManyToOne
+    @JoinColumn(name = "position_id", nullable = false)
+    private Position position;
     
     @Column(length = 100)
     private String jobTitle;

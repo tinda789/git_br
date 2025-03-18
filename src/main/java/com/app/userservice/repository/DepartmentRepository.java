@@ -18,4 +18,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     Optional<Department> findByCodeAndCompanyId(String code, Long companyId);
     boolean existsByNameAndCompanyId(String name, Long companyId);
     boolean existsByCodeAndCompanyId(String code, Long companyId);
+    
+    // Đếm số phòng ban theo công ty
+    long countByCompanyId(Long companyId);
 }
