@@ -75,23 +75,27 @@ public class DatabaseInitializer implements CommandLineRunner {
         createPermissionIfNotFound("PROJECT_UPDATE", "Update projects", "project", "update");
         createPermissionIfNotFound("PROJECT_DELETE", "Delete projects", "project", "delete");
         
+ // Workspace permissions
+        createPermissionIfNotFound("WORKSPACE_READ", "Read workspace information", "workspace", "read");
+        createPermissionIfNotFound("WORKSPACE_CREATE", "Create workspaces", "workspace", "create");
+        createPermissionIfNotFound("WORKSPACE_UPDATE", "Update workspaces", "workspace", "update");
+        createPermissionIfNotFound("WORKSPACE_DELETE", "Delete workspaces", "workspace", "delete");
+
         // Task permissions
         createPermissionIfNotFound("TASK_READ", "Read task information", "task", "read");
         createPermissionIfNotFound("TASK_CREATE", "Create tasks", "task", "create");
         createPermissionIfNotFound("TASK_UPDATE", "Update tasks", "task", "update");
         createPermissionIfNotFound("TASK_DELETE", "Delete tasks", "task", "delete");
-        
+        createPermissionIfNotFound("TASK_ASSIGN", "Assign tasks to others", "task", "assign");
+        createPermissionIfNotFound("TASK_COMMENT", "Comment on tasks", "task", "comment");
+
         // Document permissions
         createPermissionIfNotFound("DOCUMENT_READ", "Read documents", "document", "read");
         createPermissionIfNotFound("DOCUMENT_CREATE", "Create documents", "document", "create");
         createPermissionIfNotFound("DOCUMENT_UPDATE", "Update documents", "document", "update");
         createPermissionIfNotFound("DOCUMENT_DELETE", "Delete documents", "document", "delete");
         
-        // Tenant permissions
-        createPermissionIfNotFound("TENANT_READ", "Read tenant information", "tenant", "read");
-        createPermissionIfNotFound("TENANT_CREATE", "Create tenants", "tenant", "create");
-        createPermissionIfNotFound("TENANT_UPDATE", "Update tenants", "tenant", "update");
-        createPermissionIfNotFound("TENANT_DELETE", "Delete tenants", "tenant", "delete");
+      
     }
 
     private Permission createPermissionIfNotFound(String name, String description, String resourceName, String actionName) {
@@ -188,6 +192,9 @@ public class DatabaseInitializer implements CommandLineRunner {
                     Set<Role> roles = new HashSet<>();
                     roles.add(roleRepository.findByName("ADMIN").orElseThrow());
                     roles.add(roleRepository.findByName("USER").orElseThrow());
+                    roles.add(roleRepository.findByName("EMPLOYEE").orElseThrow());
+                    roles.add(roleRepository.findByName("MANAGER").orElseThrow());
+
                     admin.setRoles(roles);
                     
                     return userRepository.save(admin);
