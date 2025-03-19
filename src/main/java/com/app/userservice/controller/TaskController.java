@@ -24,14 +24,14 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
         List<TaskDTO> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/created-by-me")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getTasksCreatedByMe() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     @GetMapping("/assigned-to-me")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getTasksAssignedToMe() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -54,28 +54,28 @@ public class TaskController {
     }
 
     @GetMapping("/workspace/{workspaceId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getTasksByWorkspace(@PathVariable Long workspaceId) {
         List<TaskDTO> tasks = taskService.getTasksByWorkspace(workspaceId);
         return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/department/{departmentId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getTasksByDepartment(@PathVariable Long departmentId) {
         List<TaskDTO> tasks = taskService.getTasksByDepartment(departmentId);
         return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/status/{status}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getTasksByStatus(@PathVariable TaskStatus status) {
         List<TaskDTO> tasks = taskService.getTasksByStatus(status);
         return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/assignee/{assigneeId}/status/{status}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TaskDTO>> getTasksByAssigneeAndStatus(
             @PathVariable Long assigneeId, 
             @PathVariable TaskStatus status) {
@@ -84,14 +84,14 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
         TaskDTO task = taskService.getTaskById(id);
         return ResponseEntity.ok(task);
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<MessageResponse> createTask(@Valid @RequestBody TaskDTO taskDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -106,7 +106,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<MessageResponse> updateTask(
             @PathVariable Long id,
             @Valid @RequestBody TaskDTO taskDTO) {
@@ -124,7 +124,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}/status")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<MessageResponse> updateTaskStatus(
             @PathVariable Long id,
             @RequestParam TaskStatus status) {
@@ -142,7 +142,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}/progress")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<MessageResponse> updateTaskProgress(
             @PathVariable Long id,
             @RequestParam int progress) {

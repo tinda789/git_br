@@ -15,7 +15,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/admin/users")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('ADMIN')")
 public class UserAdminController {
 
     @Autowired

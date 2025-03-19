@@ -58,7 +58,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER','SYSTEM_ADMIN')")
+    @PreAuthorize("hasAnyRole('SYSTEM_ADMIN', 'ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> createDepartment(@Valid @RequestBody DepartmentDTO departmentDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -73,7 +73,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('SYSTEM_ADMIN', 'ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> updateDepartment(
             @PathVariable Long id,
             @Valid @RequestBody DepartmentDTO departmentDTO) {
@@ -91,7 +91,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('SYSTEM_ADMIN', 'ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> deleteDepartment(@PathVariable Long id) {
         MessageResponse response = departmentService.deleteDepartment(id);
         

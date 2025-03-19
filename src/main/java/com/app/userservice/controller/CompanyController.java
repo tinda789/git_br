@@ -75,7 +75,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> updateCompany(
             @PathVariable Long id,
             @Valid @RequestBody CompanyDTO companyDTO) {
@@ -93,7 +93,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> deleteCompany(@PathVariable Long id) {
         MessageResponse response = companyService.deleteCompany(id);
         
@@ -105,7 +105,7 @@ public class CompanyController {
     }
     
     @PutMapping("/{id}/restore")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> restoreCompany(@PathVariable Long id) {
         MessageResponse response = companyService.restoreCompany(id);
         

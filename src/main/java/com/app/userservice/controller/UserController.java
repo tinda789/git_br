@@ -25,7 +25,7 @@ public class UserController {
     private UserService userService;
     
     @GetMapping("/info")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<?> getCurrentUserInfo() {
         // Get authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -41,7 +41,7 @@ public class UserController {
     }
     
     @PutMapping("/profile")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest profileRequest) {
         // Get authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,7 +58,7 @@ public class UserController {
     }
     
     @PutMapping("/password")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<?> changePassword(@Valid @RequestBody UpdatePasswordRequest passwordRequest) {
         // Get authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +75,7 @@ public class UserController {
     }
 
     @GetMapping("/employee")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> employeeAccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -89,7 +89,7 @@ public class UserController {
     }
 
     @GetMapping("/manager")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<?> managerAccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -103,7 +103,7 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('ADMIN')")
     public ResponseEntity<?> adminAccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();

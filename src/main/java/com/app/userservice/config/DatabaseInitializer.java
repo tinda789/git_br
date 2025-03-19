@@ -200,6 +200,29 @@ public class DatabaseInitializer implements CommandLineRunner {
                 permissionRepository.findByName("EMPLOYEE_UPDATE").orElseThrow()
         ));
         createRoleIfNotFound("MANAGER", "Department manager", managerPermissions);
+
+        // Create HR role
+Set<Permission> hrPermissions = new HashSet<>(Arrays.asList(
+    permissionRepository.findByName("USER_READ").orElseThrow(),
+    permissionRepository.findByName("TASK_READ").orElseThrow(),
+    permissionRepository.findByName("TASK_CREATE").orElseThrow(),
+    permissionRepository.findByName("TASK_UPDATE").orElseThrow(),
+    permissionRepository.findByName("PROJECT_READ").orElseThrow(),
+    permissionRepository.findByName("DOCUMENT_READ").orElseThrow(),
+    permissionRepository.findByName("DOCUMENT_CREATE").orElseThrow(),
+    permissionRepository.findByName("DOCUMENT_UPDATE").orElseThrow(),
+    permissionRepository.findByName("COMPANY_READ").orElseThrow(),
+    permissionRepository.findByName("DEPARTMENT_READ").orElseThrow(),
+    permissionRepository.findByName("TEAM_READ").orElseThrow(),
+    permissionRepository.findByName("POSITION_READ").orElseThrow(),
+    permissionRepository.findByName("POSITION_CREATE").orElseThrow(),
+    permissionRepository.findByName("POSITION_UPDATE").orElseThrow(),
+    permissionRepository.findByName("EMPLOYEE_READ").orElseThrow(),
+    permissionRepository.findByName("EMPLOYEE_CREATE").orElseThrow(),
+    permissionRepository.findByName("EMPLOYEE_UPDATE").orElseThrow(),
+    permissionRepository.findByName("EMPLOYEE_DELETE").orElseThrow()
+));
+createRoleIfNotFound("HR", "Human Resources manager", hrPermissions);
         
         // Create ADMIN role
         Set<Permission> adminPermissions = permissionRepository.findAll()

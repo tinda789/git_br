@@ -1,7 +1,6 @@
 package com.app.userservice.controller;
 
 import com.app.userservice.dto.*;
-import com.app.userservice.entity.user.User;
 import com.app.userservice.security.service.UserDetailsImpl;
 import com.app.userservice.service.AuthService;
 import com.app.userservice.service.TwoFactorAuthService;

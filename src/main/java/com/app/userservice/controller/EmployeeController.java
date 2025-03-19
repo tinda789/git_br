@@ -25,70 +25,70 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
         List<EmployeeDTO> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/company/{companyId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByCompany(@PathVariable Long companyId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesByCompany(companyId);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/department/{departmentId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByDepartment(@PathVariable Long departmentId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesByDepartment(departmentId);
         return ResponseEntity.ok(employees);
     }
     
     @GetMapping("/secondary-department/{departmentId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesBySecondaryDepartment(@PathVariable Long departmentId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesBySecondaryDepartment(departmentId);
         return ResponseEntity.ok(employees);
     }
     
     @GetMapping("/any-department/{departmentId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByAnyDepartment(@PathVariable Long departmentId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesByAnyDepartment(departmentId);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/team/{teamId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByTeam(@PathVariable Long teamId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesByTeam(teamId);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/position/{positionId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByPosition(@PathVariable Long positionId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesByPosition(positionId);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/manager/{managerId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER', 'HR') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByManager(@PathVariable Long managerId) {
         List<EmployeeDTO> employees = employeeService.getEmployeesByManager(managerId);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
         EmployeeDTO employee = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(employee);
     }
 
     @GetMapping("/user/{userId}")
-    @PreAuthorize("hasRole('USER') or hasAuthority('EMPLOYEE_READ')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER') or hasAuthority('EMPLOYEE_READ')")
     public ResponseEntity<EmployeeDTO> getEmployeeByUserId(@PathVariable Long userId) {
         EmployeeDTO employee = employeeService.getEmployeeByUserId(userId);
         return ResponseEntity.ok(employee);
@@ -109,7 +109,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_CREATE')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_CREATE')")
     public ResponseEntity<MessageResponse> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -124,7 +124,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_UPDATE')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_UPDATE')")
     public ResponseEntity<MessageResponse> updateEmployee(
             @PathVariable Long id,
             @Valid @RequestBody EmployeeDTO employeeDTO) {
@@ -142,7 +142,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}/deactivate")
-    @PreAuthorize("hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_DELETE')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_DELETE')")
     public ResponseEntity<MessageResponse> deactivateEmployee(@PathVariable Long id) {
         MessageResponse response = employeeService.deactivateEmployee(id);
         
@@ -154,7 +154,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}/terminate")
-    @PreAuthorize("hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_DELETE')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'HR') or hasAuthority('EMPLOYEE_DELETE')")
     public ResponseEntity<MessageResponse> terminateEmployee(
             @PathVariable Long id,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime terminationDate) {

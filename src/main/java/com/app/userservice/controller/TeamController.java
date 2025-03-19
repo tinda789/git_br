@@ -51,7 +51,7 @@ public class TeamController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> createTeam(@Valid @RequestBody TeamDTO teamDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -66,7 +66,7 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> updateTeam(
             @PathVariable Long id,
             @Valid @RequestBody TeamDTO teamDTO) {
@@ -84,7 +84,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> deleteTeam(@PathVariable Long id) {
         MessageResponse response = teamService.deleteTeam(id);
         

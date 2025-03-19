@@ -23,30 +23,35 @@ public class WorkspaceController {
     private WorkspaceService workspaceService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<WorkspaceDTO>> getAllWorkspaces() {
         List<WorkspaceDTO> workspaces = workspaceService.getAllWorkspaces();
         return ResponseEntity.ok(workspaces);
     }
 
     @GetMapping("/active")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<WorkspaceDTO>> getActiveWorkspaces() {
         List<WorkspaceDTO> workspaces = workspaceService.getActiveWorkspaces();
         return ResponseEntity.ok(workspaces);
     }
 
     @GetMapping("/department/{departmentId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<WorkspaceDTO>> getWorkspacesByDepartment(@PathVariable Long departmentId) {
         List<WorkspaceDTO> workspaces = workspaceService.getWorkspacesByDepartment(departmentId);
         return ResponseEntity.ok(workspaces);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<WorkspaceDTO> getWorkspaceById(@PathVariable Long id) {
         WorkspaceDTO workspace = workspaceService.getWorkspaceById(id);
         return ResponseEntity.ok(workspace);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<MessageResponse> createWorkspace(@Valid @RequestBody WorkspaceDTO workspaceDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -61,7 +66,7 @@ public class WorkspaceController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> updateWorkspace(
             @PathVariable Long id,
             @Valid @RequestBody WorkspaceDTO workspaceDTO) {
@@ -79,6 +84,7 @@ public class WorkspaceController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> deleteWorkspace(@PathVariable Long id) {
         MessageResponse response = workspaceService.deleteWorkspace(id);
         

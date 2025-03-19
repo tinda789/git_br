@@ -29,7 +29,7 @@ public class LoginController {
     private UserRepository userRepository;
     
     @GetMapping("/recent")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('USER')")
     public ResponseEntity<?> getRecentLoginHistory() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();

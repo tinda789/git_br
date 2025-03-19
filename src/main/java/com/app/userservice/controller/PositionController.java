@@ -58,7 +58,7 @@ public class PositionController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> createPosition(@Valid @RequestBody PositionDTO positionDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -73,7 +73,7 @@ public class PositionController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> updatePosition(
             @PathVariable Long id,
             @Valid @RequestBody PositionDTO positionDTO) {
@@ -91,7 +91,7 @@ public class PositionController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('SYSTEM_ADMIN') or hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<MessageResponse> deletePosition(@PathVariable Long id) {
         MessageResponse response = positionService.deletePosition(id);
         

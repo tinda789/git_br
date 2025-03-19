@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/admin/roles")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('SYSTEM_ADMIN') or hasRole('ADMIN')")
 public class RoleAdminController {
 
     @Autowired
