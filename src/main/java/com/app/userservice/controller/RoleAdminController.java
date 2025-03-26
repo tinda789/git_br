@@ -64,16 +64,4 @@ public class RoleAdminController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-    
-    @PutMapping("/{id}/permissions")
-    public ResponseEntity<MessageResponse> updateRolePermissions(
-            @PathVariable Long id, @RequestBody List<String> permissionNames) {
-        MessageResponse response = roleAdminService.updateRolePermissions(id, permissionNames);
-        
-        if (response.isSuccess()) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
 }

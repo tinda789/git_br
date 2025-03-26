@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +18,6 @@ public class RoleDTO {
     
     @Size(max = 200, message = "Mô tả không được vượt quá 200 ký tự")
     private String description;
-    
-    private List<String> permissions;
     
     private boolean isSystem;
 }

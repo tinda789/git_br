@@ -36,27 +36,16 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
-                .flatMap(role -> {
-                    // Add role as an authority
-                    List<GrantedAuthority> auths = List.of(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-                    
-                    // Add all permissions from the role
-                    List<GrantedAuthority> permissionAuthorities = role.getPermissions().stream()
-                            .map(permission -> new SimpleGrantedAuthority(permission.getName()))
-                            .collect(Collectors.toList());
-                            
-                    return List.of(auths, permissionAuthorities).stream().flatMap(Collection::stream);
-                })
-                .distinct()
-                .collect(Collectors.toList());
+            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+            .collect(Collectors.toList());
 
         return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getFullName(),
-                user.getPassword(),
-                authorities);
+            user.getId(),
+            user.getUsername(),
+            user.getEmail(),
+            user.getFullName(),
+            user.getPassword(),
+            authorities);
     }
 
     @Override
